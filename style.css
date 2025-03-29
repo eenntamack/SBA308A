@@ -1,0 +1,107 @@
+
+#background_space{
+    /*position: absolute;*/
+    width:100vw;
+    height:100vh;
+    position:absolute;
+    background-image: url('deepspace.jpg');
+    z-index: 0 !important;
+    top: -10px;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrolling */
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+#nasa_card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:500px;
+    width:950px;
+    background-color: rgba(4, 4, 58,0.7);
+    backdrop-filter: blur(8px);
+    position:relative;
+    color:white;
+    font-size: 15px;
+    z-index: 10;
+    border-radius: 20px;
+    box-shadow: black 30px 10px;
+    flex-direction: column;
+    padding:30px;
+    
+}
+#explanation{
+    max-width:50%;
+    margin:auto;
+}
+
+
+.hovering{
+    top: 0vh;
+    transition:top .75s ease-in-out;
+}
+.hovering:hover{
+    top: -2vh;
+}
+
+
+#space_title{
+    width:auto;
+    height: auto;
+    position:relative;
+    z-index:10;
+    margin-top: -80px;
+    margin-bottom: 80px;
+    display: flex;
+    font-size: 10px;
+    background-color: antiquewhite;
+}
+
+.enter{
+    animation-name:flow_in;
+    animation-duration: 4s;
+}
+
+@keyframes flow_in {
+    0%{
+        top: 100vh;
+        opacity: 0;
+    }85%{
+
+
+        opacity:0.9;
+    }
+    100%{
+        top: 0vh;
+        opacity: 1;
+    }
+    
+}
+
+
+.fade_in{
+    animation-name:fadeIn;
+    animation-duration: 3s;
+}
+@keyframes fadeIn{
+    0%{
+        opacity: 0;
+    }100%{
+        opacity: 1;
+    }
+}
