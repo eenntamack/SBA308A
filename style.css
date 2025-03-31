@@ -31,7 +31,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    height:500px;
+    height:auto;
     width:950px;
     background-color: rgba(4, 4, 58,0.7);
     backdrop-filter: blur(8px);
@@ -65,8 +65,7 @@ body{
     height: auto;
     position:relative;
     z-index:10;
-    margin-top: -80px;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
     display: flex;
     font-size: 10px;
     background-color: antiquewhite;
@@ -103,5 +102,74 @@ body{
         opacity: 0;
     }100%{
         opacity: 1;
+    }
+}
+
+
+.stageRight{
+    animation-name:stage_right;
+    animation-duration: 2s;
+}
+
+@keyframes stage_right{
+    0%{
+        opacity:1;
+        transform:translateX(0px);
+    }50%{
+        opacity:0;
+        transform:translateX(-80px);
+    }75%{
+        opacity:0;
+        transform:translateX(80px)
+    }100%{
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+.enterToRight{
+    animation-name: enterTo_right;
+    animation-duration: 2s;
+}
+
+
+@keyframes enterTo_right{
+    0%{
+        opacity:0;
+        transform:translateX(-80px);
+    }100%{
+        opacity:1;
+        transform:translateX(0px);
+    }
+}
+
+
+.stageLeft{
+    animation-name:stage_left;
+    animation-duration: 2s;
+}
+
+@keyframes stage_left{
+    0%{
+        opacity:1;
+        transform:translateX(0px);
+    }100%{
+        opacity:0;
+        transform:translateX(80px);
+    }
+}
+
+.enterLeft{
+    animation-name: enterTo_left;
+    animation-duration: 2s;
+}
+
+@keyframes enterTo_left{
+    0%{
+        opacity:0;
+        transform:translateX(80px);
+    }100%{
+        opacity:1;
+        transform:translateX(0px);
     }
 }

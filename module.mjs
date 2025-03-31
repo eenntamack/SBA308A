@@ -1,15 +1,13 @@
 const apiKey =  'rieB0eYfKcvuQnMQ8wFJnUZqNJhmlUPnTFvjYIhg';
 
 
-function formatDate() {
-    const date = new Date();
+function formatDate(date = new Date()) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // months are 0-based
     const day = String(date.getDate()).padStart(2, '0');
-
     return `${year}-${month}-${day}`;
-
 }
+
 
 const date = formatDate()
 
@@ -22,32 +20,12 @@ async function getNasaData(apiKey,date){
         data.title = jsonData.title
         data.explanation = jsonData.explanation
         data.hdurl = jsonData.hdurl
-        return data;
-        
+        return data;    
     }catch{
         console.log( "could not fetch nasa data")
     }
-
-   
-   
-    //console.log(nasaJson["title"])
-    //console.log(nasaJson["explanation"])
-
-    //data["title"] = nasaJson["title"]
-    //data["explanation"] = nasaJson["explanation"];
-
-
-    //return data;
-
-
 }
 
-
-getNasaData(apiKey,date).then((data)=>{
-    console.log(data)
-}).catch((err)=>{
-    console.log("error encountered")
-});
 
 
 export{ getNasaData , apiKey , formatDate};
