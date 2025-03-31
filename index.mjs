@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded",async ()=>{
         }
     }else{
         iod.src = ""
-        iod.alt ="image not availible"
+        iod.alt ="image not available"
         txtOD.textContent = "APOD is in the works...."
         imgT.textContent = "TBA"
         time.textContent = changeDateString;
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded",async ()=>{
 
                                 if(!data.hdurl){
                                     iod.src = ""
-                                    iod.alt ="image not availible"
+                                    iod.alt ="image not available"
                                     txtOD = document.getElementById("explanation")
                                     txtOD.textContent = data.explanation
                                     imgT = document.getElementById("imgTitle");
