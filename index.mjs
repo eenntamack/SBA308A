@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded",async ()=>{
     const flip = document.getElementById("flip");
     const left = document.getElementById("left");
     const right = document.getElementById("right");
+    const time = document.getElementById("time")
 
     nasaCard.classList.add("enter");
     document.body.classList.add("fade_in")
@@ -25,121 +26,127 @@ document.addEventListener("DOMContentLoaded",async ()=>{
     txtOD.textContent = data.explanation
     let imgT = document.getElementById("imgTitle");
     imgT.textContent = data.title
-    
+    time.textContent = changeDateString;
+
+    //handling cases if NASA hasnt uploaded a new APOD in time when the user requests.(e.g. at midnight) ;
+    if(data){
+        if(!data.hdurl){
+            iod.src = ""
+            iod.alt ="image not availible"
+            txtOD = document.getElementById("explanation")
+            txtOD.textContent = data.explanation
+            imgT = document.getElementById("imgTitle");
+            imgT.textContent = data.title 
+            time.textContent = changeDateString;
+        }else{
+            iod.src = data.hdurl
+            iod.alt = data.hdurl
+            txtOD = document.getElementById("explanation")
+            txtOD.textContent = data.explanation
+            imgT = document.getElementById("imgTitle");
+            imgT.textContent = data.title 
+            time.textContent = changeDateString;
+        }
+    }else{
+        iod.src = ""
+        iod.alt ="image not availible"
+        txtOD.textContent = "APOD is in the works...."
+        imgT.textContent = "TBA"
+        time.textContent = changeDateString;
+    }
+
+    //setting right button to a disabled style since we cant search for APOD in the future
     right.style.opacity = "0.4";
     nasaCard.addEventListener("animationend",async()=>{
         document.body.classList.remove("fade_in")
         nasaCard.classList.remove("enter")
         nasaCard.classList.add("hovering")
-
+        right.style.opacity = "0.4";
         flip.addEventListener("click",async (event)=>{  
-            if (changeDate>=currentDate){
-                right.style.opacity = 0.4;
-            }
+            //targeting the icon class which has the arrows
             if(event.target.tagName === "I"){
+                //we use the functions(explained in module.mjs) to set the date and use it in getNasaData which uses the fetch method
                 if(event.target.id == "left"){
                         changeDate.setDate(changeDate.getDate()-1)
                         changeDateString = formatDate(changeDate)
                         console.log("change: "+ changeDate)
                         data = await getNasaData(apiKey,changeDateString);
-
-                        nasaCard.classList.add("stageRight")
-                        nasaCard.classList.remove("stageRight") 
-                        
-                    
-                        
+ 
                         right.style.opacity = 1
                         if(data){
 
-                            if(!data.hdurl){
-                                iod.src = ""
-                                iod.alt ="image not availible"
-                            }else{
-                                iod.src= data.hdurl
-                                iod.alt = data.hdurl
+                                if(!data.hdurl){
+                                    iod.src =  "";
+                                    iod.alt = "Image is not availible"
+                                }else{
+                                    iod.src=  data.hdurl
+                                    iod.alt = data.hdurl
+                                }
+                                
                                 txtOD = document.getElementById("explanation")
                                 txtOD.textContent = data.explanation
                                 imgT = document.getElementById("imgTitle");
                                 imgT.textContent = data.title 
-                            }
+                                time.textContent = changeDateString;
+                        
                         
                         }else{
                             console.log("No data could be extracted")
                         }
                     
-                }
+                }else
         
                 if(event.target.id == "right"){
-                    if (changeDate>=currentDate){
-                        right.style.opacity = 0.4;
-                    }
-                    
-                    
-                    
-                    if ( changeDate >= currentDate){
+                
+                    //if the date that has changed is set to the same date as today; we disable going 
+                    //right setting the opacity to 0.4
+                    if ( changeDateString === formatDate()){
                         
                         right.style.opacity = 0.4;
-                        changeDate = new Date()
-                        changeDateString = formatDate(changeDate)
-                        data = await getNasaData(apiKey,changeDateString);
-                        right.style.opacity = 1;
-                        if(data){
-
-                            if(!data.hdurl){
-                                iod.src = ""
-                                iod.alt ="image not availible"
-                            }else{
-                            iod.src = data.hdurl
-                            iod.alt = data.hdurl
-                            txtOD = document.getElementById("explanation")
-                            txtOD.textContent = data.explanation
-                            imgT = document.getElementById("imgTitle");
-                            imgT.textContent = data.title 
-                            }
-                           
-                        }else{
-                            console.log("No data could be extracted")
-                        }
+                        
                     }else{
-                        //nasaCard.classList.add("stageLeft");
-                        right.style.opacity = 1;
-                        changeDate.setDate(changeDate.getDate()+1)
-                        console.log("change: "+ changeDate)
-                        changeDateString = formatDate(changeDate)
-                        data = await getNasaData(apiKey,changeDateString);
-                        
-                        if(data){
+                            //else we use the functions(explained in module.mjs) to set the date and use it in  fetch
+                            changeDate.setDate(changeDate.getDate()+1)
+                            console.log("change: "+ changeDate)
+                            changeDateString = formatDate(changeDate)
+                            data = await getNasaData(apiKey,changeDateString);
 
-                            if(!data.hdurl){
-                                iod.src = ""
-                                iod.alt ="image not availible"
-                            }else{
-                            iod.src = data.hdurl
-                            iod.alt = data.hdurl
-                            txtOD = document.getElementById("explanation")
-                            txtOD.textContent = data.explanation
-                            imgT = document.getElementById("imgTitle");
-                            imgT.textContent = data.title 
+                            if (changeDateString === formatDate()) {
+                                right.style.opacity = "0.4"; // Disable right button
+                            } else {
+                                right.style.opacity = "1"; // Enable right button if not on current date
                             }
-                           
-                        }else{
-                            console.log("No data could be extracted")
-                        }
-                    }
-                    
-                    
+                            
+                            if(data){
 
+                                if(!data.hdurl){
+                                    iod.src = ""
+                                    iod.alt ="image not availible"
+                                    txtOD = document.getElementById("explanation")
+                                    txtOD.textContent = data.explanation
+                                    imgT = document.getElementById("imgTitle");
+                                    imgT.textContent = data.title 
+                                    time.textContent = changeDateString;
+                                }else{
+                                    iod.src = data.hdurl
+                                    iod.alt = data.hdurl
+                                    txtOD = document.getElementById("explanation")
+                                    txtOD.textContent = data.explanation
+                                    imgT = document.getElementById("imgTitle");
+                                    imgT.textContent = data.title 
+                                    time.textContent = changeDateString;
+                                }
+                            
+                            }else{
+                                console.log("No data could be extracted")
+                            }
+                        
+                    }
                     
                 }
             }     
         })
 
-
-
-
     })
-
-
-
     
 })

@@ -173,3 +173,30 @@ body{
         transform:translateX(0px);
     }
 }
+
+.twinkle{
+    animation-name:t;
+    animation-iteration-count: infinite;
+}
+
+@keyframes t {
+    0%{
+        opacity:1;
+    }10%{
+        opacity:0.5;
+    }20%{
+        opacity:1;
+    }30%{
+        opacity:0.2;
+    }40%{
+        opacity:0.1;
+    }50%{
+        opacity:0.9;
+    }60%{
+        opacity:1;
+    }90%{
+        opacity:0;
+    }100%{
+        opacity:1;
+    }
+}
